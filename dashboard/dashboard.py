@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load data (asumsi kamu sudah memiliki DataFrame combined_df yang berisi data kualitas udara)
-combined_df = pd.read_csv('data_air_quality.csv')
+combined_df = pd.read_csv("https://raw.githubusercontent.com/auliasarics/Proyek-Data-Analisis-dengan-Python/refs/heads/main/dashboard/data_air_quality.csv")
 
 # Ranges untuk parameter kualitas udara (contoh, kamu bisa sesuaikan)
 pm25_ranges = [0, 10, 20, 30, 40]
