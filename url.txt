@@ -1,1 +1,1 @@
-https://share.streamlit.io/
+https://auliasarics.streamlit.app/
