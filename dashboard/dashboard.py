@@ -49,10 +49,12 @@ station_names = [
 st.title(f"Perbandingan Kualitas Udara Antar Stasiun ({start_year}-{end_year})")
 fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(18, 10))
 fig.suptitle(f'Perbandingan Kualitas Udara Antar Stasiun ({start_year}-{end_year})', fontsize=16)
+
 for i, parameter in enumerate(air_quality_parameters):
     row = i // 3
     col = i % 3
     axs[row, col].set_title(parameter)
+    
     for j, station in enumerate(station_names):
         filtered_data = combined_df[
             (combined_df['year'] >= start_year) & 
@@ -60,8 +62,11 @@ for i, parameter in enumerate(air_quality_parameters):
             (combined_df['station'] == station)
         ]
         axs[row, col].bar(station, filtered_data[parameter].mean(), label=station)
+    
     axs[row, col].set_xlabel('Stasiun')
     axs[row, col].set_ylabel('Rata-rata Kualitas Udara')
+    axs[row, col].tick_params(axis='x', rotation=90)
     axs[row, col].legend()
+
 plt.tight_layout(rect=[0, 0, 1, 0.96])
-st.pyplot(fig)
+
