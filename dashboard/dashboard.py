@@ -18,12 +18,12 @@ parameter_ranges = {
 # Dashboard Streamlit
 st.title('Dashboard Kualitas Udara')
 
-# Visualisasi tren kualitas udara
+# Visualisasi tren kualitas udara berdasarkan parameter di berbagai stasiun pengukuran
 st.subheader('Tren Kualitas Udara Berdasarkan Parameter')
 fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(15, 10))
 fig.suptitle('Tren Kualitas Udara Berdasarkan Parameter di Berbagai Stasiun Pengukuran', fontsize=16)
 
-for ax, (param, ranges) in zip(axes.flatten(), parameter_ranges.items()):
+for ax, param in zip(axes.flatten(), parameter_ranges.keys()):
     sns.lineplot(data=combined_df, x='year', y=param, hue='station', ax=ax)
     ax.set_title(f'Tren {param} di Berbagai Stasiun')
     ax.set_xlabel('Tahun')
@@ -47,13 +47,8 @@ st.pyplot(plt)
 # Perbandingan Kualitas Udara Antar Stasiun
 start_year = 2015
 end_year = 2017
-air_quality_parameters = ['PM2.5', 'PM10', 'SO2', 'NO2', 'CO', 'O3']
-station_names = [
-    'Aotizhongxin', 'Changping', 'Dingling', 'Dongsi', 'Guanyuan', 'Gucheng', 
-    'Huairou', 'Nongzhanguan', 'Shunyi', 'Tiantan', 'Wanliu', 'Wanshouxigong'
-]
 
-st.subheader(f'Perbandingan Kualitas Udara Antar Stasiun (2015-2017)')
+st.subheader(f'Perbandingan Kualitas Udara Antar Stasiun ({start_year}-{end_year})')
 
 fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(18, 10))
 fig.suptitle(f'Perbandingan Kualitas Udara Antar Stasiun ({start_year}-{end_year})', fontsize=16)
@@ -64,9 +59,15 @@ for i, parameter in enumerate(air_quality_parameters):
 
     axs[row, col].set_title(parameter)
     
-    for j, combined_df in enumerate(dataframes):
-        filtered_data = combined_df[(combined_df['year'] >= start_year) & (combined_df['year'] <= end_year)]
-        axs[row, col].bar(station_names[j], filtered_data[parameter].mean(), label=station_names[j])
+    # Menghitung rata-rata kualitas udara per stasiun
+    for station in station_names:
+        filtered_data = combined_df[
+            (combined_df['year'] >= start_year) & 
+            (combined_df['year'] <= end_year) & 
+            (combined_df['station'] == station)
+        ]
+        mean_value = filtered_data[parameter].mean()
+        axs[row, col].bar(station, mean_value, label=station)
 
     axs[row, col].set_xlabel('Stasiun')
     axs[row, col].set_ylabel('Rata-rata Kualitas Udara')
@@ -74,4 +75,3 @@ for i, parameter in enumerate(air_quality_parameters):
 
 plt.tight_layout(rect=[0, 0, 1, 0.96])
 st.pyplot(fig)
-
