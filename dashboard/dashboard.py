@@ -45,16 +45,15 @@ plt.title('Heatmap Korelasi antara Parameter Cuaca dan Kualitas Udara')
 st.pyplot(plt)
 
 # Perbandingan Kualitas Udara Antar Stasiun
-st.subheader(f'Perbandingan Kualitas Udara Antar Stasiun (2015-2017)')
-
 start_year = 2015
 end_year = 2017
 air_quality_parameters = ['PM2.5', 'PM10', 'SO2', 'NO2', 'CO', 'O3']
-
 station_names = [
     'Aotizhongxin', 'Changping', 'Dingling', 'Dongsi', 'Guanyuan', 'Gucheng', 
     'Huairou', 'Nongzhanguan', 'Shunyi', 'Tiantan', 'Wanliu', 'Wanshouxigong'
 ]
+
+st.subheader(f'Perbandingan Kualitas Udara Antar Stasiun (2015-2017)')
 
 fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(18, 10))
 fig.suptitle(f'Perbandingan Kualitas Udara Antar Stasiun ({start_year}-{end_year})', fontsize=16)
@@ -65,11 +64,9 @@ for i, parameter in enumerate(air_quality_parameters):
 
     axs[row, col].set_title(parameter)
     
-    for j, station in enumerate(station_names):
-        filtered_data = combined_df[(combined_df['year'] >= start_year) & 
-                                    (combined_df['year'] <= end_year) & 
-                                    (combined_df['station'] == station)]
-        axs[row, col].bar(station, filtered_data[parameter].mean(), label=station)
+    for j, combined_df in enumerate(dataframes):
+        filtered_data = combined_df[(combined_df['year'] >= start_year) & (combined_df['year'] <= end_year)]
+        axs[row, col].bar(station_names[j], filtered_data[parameter].mean(), label=station_names[j])
 
     axs[row, col].set_xlabel('Stasiun')
     axs[row, col].set_ylabel('Rata-rata Kualitas Udara')
