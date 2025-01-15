@@ -15,6 +15,12 @@ parameter_ranges = {
     'O3': 'O3',
 }
 
+# Define the air quality parameters
+air_quality_parameters = ['PM2.5', 'PM10', 'SO2', 'NO2', 'CO', 'O3']
+
+# Get the list of station names from the dataset
+station_names = combined_df['station'].unique()
+
 # Dashboard Streamlit
 st.title('Dashboard Kualitas Udara')
 
