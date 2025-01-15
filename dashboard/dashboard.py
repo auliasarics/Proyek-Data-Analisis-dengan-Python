@@ -3,10 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load data (asumsi kamu sudah memiliki DataFrame combined_df yang berisi data kualitas udara)
+# Load data
 combined_df = pd.read_csv("https://raw.githubusercontent.com/auliasarics/Proyek-Data-Analisis-dengan-Python/refs/heads/main/dashboard/data_air_quality.csv")
 
-# Ranges untuk parameter kualitas udara (contoh, kamu bisa sesuaikan)
+# Ranges parameter kualitas udara
 pm25_ranges = [0, 10, 20, 30, 40]
 pm10_ranges = [0, 20, 40, 60, 80]
 so2_ranges = [0, 50, 100, 150, 200]
@@ -39,7 +39,7 @@ for ax, (param, ranges) in zip(axes.flatten(), parameter_ranges.items()):
     ax.set_ylabel(param)
 
 plt.tight_layout(rect=[0, 0, 1, 0.96])
-st.pyplot(fig)  # Pastikan fig diberikan sebagai argumen
+st.pyplot(fig)
 
 # Visualisasi Heatmap Korelasi antara Cuaca dan Kualitas Udara
 st.header('Heatmap Korelasi antara Cuaca dan Kualitas Udara')
@@ -85,6 +85,6 @@ for i, parameter in enumerate(air_quality_parameters):
     axs[row, col].legend()
 
 plt.tight_layout(rect=[0, 0, 1, 0.96])
-st.pyplot(fig)  # Pastikan fig diberikan sebagai argumen
+st.pyplot(fig) 
 
 
